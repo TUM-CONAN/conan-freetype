@@ -16,10 +16,7 @@ class LibFreetypeConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False]}
     default_options = "shared=True"
-    exports_sources = [
-        "patches/CMakeProjectWrapper.txt",
-        "patches/export_all.patch"
-    ]
+    exports_sources = ["patches/CMakeProjectWrapper.txt"]
     requires = "zlib/1.2.11@fw4spl/stable"
     url = "https://gitlab.lan.local/conan/conan-freetype"
     source_subfolder = "source_subfolder"
@@ -29,7 +26,6 @@ class LibFreetypeConan(ConanFile):
         freetype_source_dir = os.path.join(self.source_folder, self.source_subfolder)
         tools.get("https://download.savannah.gnu.org/releases/freetype/freetype-{0}.tar.bz2".format(self.version))
         os.rename("freetype-" + self.version, self.source_subfolder)
-        tools.patch(freetype_source_dir, "patches/export_all.patch")
         os.rename(os.path.join(self.source_subfolder, "CMakeLists.txt"),
                   os.path.join(self.source_subfolder, "CMakeListsOriginal.txt"))
         shutil.copy("patches/CMakeProjectWrapper.txt",
