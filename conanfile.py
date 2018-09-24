@@ -25,6 +25,9 @@ class LibFreetypeConan(ConanFile):
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
 
+    def configure(self):
+        del self.settings.compiler.libcxx
+
     def source(self):
         freetype_source_dir = os.path.join(self.source_folder, self.source_subfolder)
         tools.get("https://download.savannah.gnu.org/releases/freetype/freetype-{0}.tar.bz2".format(self.version))
