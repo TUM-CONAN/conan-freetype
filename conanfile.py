@@ -40,6 +40,8 @@ class LibFreetypeConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
+        if not tools.os_info.is_windows:
+            cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = "ON"
         cmake.configure(source_folder=self.source_subfolder)
         cmake.build()
         cmake.install()
