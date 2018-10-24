@@ -40,6 +40,7 @@ class LibFreetypeConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
+        cmake.definitions["DISABLE_FORCE_DEBUG_POSTFIX"] = "ON"
         if not tools.os_info.is_windows:
             cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = "ON"
         cmake.configure(source_folder=self.source_subfolder)
