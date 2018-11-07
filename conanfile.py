@@ -20,7 +20,6 @@ class LibFreetypeConan(ConanFile):
         "patches/CMakeProjectWrapper.txt",
         "patches/CMakeLists.patch"
     ]
-    requires = "zlib/1.2.11@sight/stable"
     url = "https://gitlab.lan.local/conan/conan-freetype"
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
@@ -28,6 +27,10 @@ class LibFreetypeConan(ConanFile):
     def configure(self):
         del self.settings.compiler.libcxx
 
+    def requirements(self):
+        if tools.os_info.is_windows:
+            self.requires("zlib/1.2.11@sight/stable")
+        
     def source(self):
         freetype_source_dir = os.path.join(self.source_folder, self.source_subfolder)
         tools.get("https://download.savannah.gnu.org/releases/freetype/freetype-{0}.tar.bz2".format(self.version))
