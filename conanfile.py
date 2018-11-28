@@ -20,7 +20,7 @@ class LibFreetypeConan(ConanFile):
         "patches/CMakeProjectWrapper.txt",
         "patches/CMakeLists.patch"
     ]
-    url = "https://gitlab.lan.local/conan/conan-freetype"
+    url = "https://git.ircad.fr/conan/conan-freetype"
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
 
