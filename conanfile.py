@@ -33,7 +33,7 @@ class LibFreetypeConan(ConanFile):
         
     def source(self):
         freetype_source_dir = os.path.join(self.source_folder, self.source_subfolder)
-        tools.get("https://download.savannah.gnu.org/releases/freetype/freetype-{0}.tar.bz2".format(self.version))
+        tools.get("https://fossies.org/linux/misc/freetype-{0}.tar.bz2".format(self.version))
         os.rename("freetype-" + self.version, self.source_subfolder)
         tools.patch(freetype_source_dir, "patches/CMakeLists.patch")
         os.rename(os.path.join(self.source_subfolder, "CMakeLists.txt"),
