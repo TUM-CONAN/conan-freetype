@@ -31,7 +31,7 @@ class LibFreetypeConan(ConanFile):
 
     def requirements(self):
         if tools.os_info.is_windows:
-            self.requires("zlib/1.2.11-r1@sight/testing")
+            self.requires("zlib/1.2.11-r1@sight/stable")
         
     def source(self):
         freetype_source_dir = os.path.join(self.source_folder, self.source_subfolder)
