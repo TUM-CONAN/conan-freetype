@@ -8,7 +8,7 @@ from conans import ConanFile, tools, CMake
 
 class LibFreetypeConan(ConanFile):
     name = "freetype"
-    package_revision = "-r1"
+    package_revision = "-r2"
     upstream_version = "2.9.1"
     version = "{0}{1}".format(upstream_version, package_revision)
     description = "FreeType is a library used to render text onto bitmaps, and provides support for other font-related operations."
@@ -30,8 +30,9 @@ class LibFreetypeConan(ConanFile):
         del self.settings.compiler.libcxx
 
     def requirements(self):
+        self.requires("common/1.0.0@sight/stable")
         if tools.os_info.is_windows:
-            self.requires("zlib/1.2.11-r1@sight/stable")
+            self.requires("zlib/1.2.11-r2@sight/testing")
         
     def source(self):
         freetype_source_dir = os.path.join(self.source_folder, self.source_subfolder)
@@ -44,7 +45,14 @@ class LibFreetypeConan(ConanFile):
                     os.path.join(self.source_subfolder, "CMakeLists.txt"))
 
     def build(self):
+        #Import common flags and defines
+        import common
         cmake = CMake(self)
+        
+        #Set common flags
+        cmake.definitions["CMAKE_C_FLAGS"] = common.get_c_flags()
+        cmake.definitions["CMAKE_CXX_FLAGS"] = common.get_cxx_flags()
+        
         cmake.definitions["DISABLE_FORCE_DEBUG_POSTFIX"] = "ON"
         if not tools.os_info.is_windows:
             cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = "ON"
