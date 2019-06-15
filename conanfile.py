@@ -45,17 +45,19 @@ class LibFreetypeConan(ConanFile):
                     os.path.join(self.source_subfolder, "CMakeLists.txt"))
 
     def build(self):
-        #Import common flags and defines
+        # Import common flags and defines
         import common
+
         cmake = CMake(self)
         
-        #Set common flags
-        cmake.definitions["CMAKE_C_FLAGS"] = common.get_c_flags()
-        cmake.definitions["CMAKE_CXX_FLAGS"] = common.get_cxx_flags()
+        # Set common flags
+        cmake.definitions["SIGHT_CMAKE_C_FLAGS"] = common.get_c_flags() + " --fuck"
+        cmake.definitions["SIGHT_CMAKE_CXX_FLAGS"] = common.get_cxx_flags() + " --fuck"
         
         cmake.definitions["DISABLE_FORCE_DEBUG_POSTFIX"] = "ON"
         if not tools.os_info.is_windows:
             cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = "ON"
+        
         cmake.configure(source_folder=self.source_subfolder)
         cmake.build()
         cmake.install()
