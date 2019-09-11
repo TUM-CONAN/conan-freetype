@@ -8,7 +8,7 @@ from conans import ConanFile, tools, CMake
 
 class LibFreetypeConan(ConanFile):
     name = "freetype"
-    package_revision = "-r2"
+    package_revision = "-r3"
     upstream_version = "2.9.1"
     version = "{0}{1}".format(upstream_version, package_revision)
     description = "FreeType is a library used to render text onto bitmaps, and provides support for other font-related operations."
@@ -30,9 +30,9 @@ class LibFreetypeConan(ConanFile):
         del self.settings.compiler.libcxx
 
     def requirements(self):
-        self.requires("common/1.0.0@sight/stable")
+        self.requires("common/1.0.1@sight/testing")
         if tools.os_info.is_windows:
-            self.requires("zlib/1.2.11-r2@sight/stable")
+            self.requires("zlib/1.2.11-r3@sight/testing")
         
     def source(self):
         freetype_source_dir = os.path.join(self.source_folder, self.source_subfolder)
