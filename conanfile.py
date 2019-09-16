@@ -27,9 +27,6 @@ class LibFreetypeConan(ConanFile):
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
 
-    def configure(self):
-        del self.settings.compiler.libcxx
-
     def requirements(self):
         self.requires("common/1.0.1@sight/testing")
         if tools.os_info.is_windows:
