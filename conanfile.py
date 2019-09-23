@@ -33,27 +33,26 @@ class LibFreetypeConan(ConanFile):
             self.requires("zlib/1.2.11-r3@sight/testing")
 
     def source(self):
-        freetype_source_dir = os.path.join(self.source_folder, self.source_subfolder)
         freetype_upstream_url = "https://download.savannah.gnu.org/releases/freetype/freetype-{0}.tar.bz2"
         tools.get(freetype_upstream_url.format(self.upstream_version))
         os.rename("freetype-" + self.upstream_version, self.source_subfolder)
-        tools.patch(freetype_source_dir, "patches/CMakeLists.patch")
-        os.rename(os.path.join(self.source_subfolder, "CMakeLists.txt"),
-                  os.path.join(self.source_subfolder, "CMakeListsOriginal.txt"))
-        shutil.copy("patches/CMakeProjectWrapper.txt",
-                    os.path.join(self.source_subfolder, "CMakeLists.txt"))
 
     def build(self):
+        freetype_source_dir = os.path.join(self.source_folder, self.source_subfolder)
+        tools.patch(freetype_source_dir, "patches/CMakeLists.patch")
+
         # Import common flags and defines
         import common
 
-        cmake = CMake(self)
+        # Generate Cmake wrapper
+        common.generate_cmake_wrapper(
+            cmakelists_path=os.path.join(self.source_subfolder, 'CMakeLists.txt'),
+            source_subfolder=self.source_subfolder,
+            build_type=self.settings.build_type
+        )
 
-        # Export common flags
-        cmake.definitions["SIGHT_CMAKE_CXX_FLAGS"] = common.get_cxx_flags()
-        cmake.definitions["SIGHT_CMAKE_CXX_FLAGS_RELEASE"] = common.get_cxx_flags_release()
-        cmake.definitions["SIGHT_CMAKE_CXX_FLAGS_DEBUG"] = common.get_cxx_flags_debug()
-        cmake.definitions["SIGHT_CMAKE_CXX_FLAGS_RELWITHDEBINFO"] = common.get_cxx_flags_relwithdebinfo()
+        cmake = CMake(self)
+        cmake.verbose = True
 
         cmake.definitions["DISABLE_FORCE_DEBUG_POSTFIX"] = "ON"
         if not tools.os_info.is_windows:
