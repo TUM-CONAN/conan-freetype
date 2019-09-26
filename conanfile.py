@@ -28,9 +28,9 @@ class LibFreetypeConan(ConanFile):
     build_subfolder = "build_subfolder"
 
     def requirements(self):
-        self.requires("common/1.0.1@sight/testing")
+        self.requires("common/1.0.1@sight/stable")
         if tools.os_info.is_windows:
-            self.requires("zlib/1.2.11-r3@sight/testing")
+            self.requires("zlib/1.2.11-r3@sight/stable")
 
     def source(self):
         freetype_upstream_url = "https://download.savannah.gnu.org/releases/freetype/freetype-{0}.tar.bz2"
@@ -52,7 +52,6 @@ class LibFreetypeConan(ConanFile):
         )
 
         cmake = CMake(self)
-        cmake.verbose = True
 
         cmake.definitions["DISABLE_FORCE_DEBUG_POSTFIX"] = "ON"
         if not tools.os_info.is_windows:
