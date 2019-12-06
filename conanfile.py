@@ -28,9 +28,9 @@ class LibFreetypeConan(ConanFile):
     build_subfolder = "build_subfolder"
 
     def requirements(self):
-        self.requires("common/1.0.2@sight/stable")
+        self.requires("ircad_common/1.0.2@camposs/stable")
         if tools.os_info.is_windows:
-            self.requires("zlib/1.2.11-r4@sight/stable")
+            self.requires("zlib/1.2.11@camposs/stable")
 
     def source(self):
         freetype_upstream_url = "https://download.savannah.gnu.org/releases/freetype/freetype-{0}.tar.bz2"
