@@ -8,7 +8,7 @@ from conans import ConanFile, tools, CMake
 
 class LibFreetypeConan(ConanFile):
     name = "freetype"
-    package_revision = "-r4"
+    package_revision = "-r5"
     upstream_version = "2.9.1"
     version = "{0}{1}".format(upstream_version, package_revision)
     description = ("FreeType is a library used to render text onto bitmaps,"
@@ -28,7 +28,7 @@ class LibFreetypeConan(ConanFile):
     build_subfolder = "build_subfolder"
 
     def requirements(self):
-        self.requires("ircad_common/1.0.2@camposs/stable")
+        self.requires("ircad_common/1.0.3@camposs/stable")
         if tools.os_info.is_windows:
             self.requires("zlib/1.2.11@camposs/stable")
 
